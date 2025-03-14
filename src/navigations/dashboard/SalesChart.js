@@ -7,12 +7,14 @@ import axios from 'axios';
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 import html2canvas from 'html2canvas';
+import { useNavigate } from 'react-router-dom';
 import Env from '../../data/Env';
 
 // Registering necessary chart.js components
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const SalesChart = () => {
+  const navigate = useNavigate()
   const [salesData, setSalesData] = useState({});
   const [loading, setLoading] = useState(false);
   const [selectedElevations, setSelectedElevations] = useState({
@@ -276,9 +278,48 @@ const SalesChart = () => {
               Generate PDF Report
             </button>
 
+            <button onClick={() => {
+              navigate('/sales-all')
+            }} style={{ 
+                padding: '10px 20px', 
+                fontSize: '16px', 
+                marginTop: '20px', 
+                marginLeft: '20px',
+                backgroundColor: '#8e44ad', 
+                color: 'white', 
+                border: 'none', 
+                cursor: 'pointer', 
+                transition: '0.3s',
+                borderRadius: '10px'
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = '#9b59b6';
+                e.target.style.color = 'black';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = '#8e44ad';
+                e.target.style.color = 'white';
+              }}>
+            In Pie Chart
+            </button>
+
           </div>
           <div style={{ width: "50%", marginTop: "20px", display: "flex", alignItems: "center" }}>
             <h3>Sales Code: {salesCode}</h3>
+            <select
+              value={salesCode}
+              onChange={(e) => {
+                handleSalesCodeChange(Number(e.target.value));
+                fetchSalesData();
+              }}
+              style={{ marginLeft: "20px", padding: "5px", borderRadius: "5px", fontSize: "16px" }}
+            >
+              {[...Array(50)].map((_, index) => (
+                <option key={index + 1} value={index + 1}>
+                  {index + 1}
+                </option>
+              ))}
+            </select>
             <button 
               style={{ marginLeft: "20px", borderRadius: "50%", padding: "5px" }} 
               onClick={() => {

@@ -268,6 +268,7 @@ const TeaWholeProductionChart = () => {
               <button style={{ marginLeft: "10px", borderRadius: "50%", padding: "5px", fontSize: '20px' }} onClick={() => changeYear(1)}><FaArrowRight /></button>
           </div>
         </div>
+        {/* Gen PDF */}
         <div style={{ marginTop: '20px' }}>
             <button onClick={generatePDF} style={{ 
                 padding: '10px 20px', 

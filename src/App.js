@@ -12,6 +12,8 @@ import SocialMediaPage from './navigations/dashboard/SocialMediaPage';
 import AboutUs from './navigations/AboutUs';
 import Services from './navigations/Services';
 import TeaTypesWholePage from './navigations/dashboard/TeaTypesWholePage';
+import SalesPieChart from './navigations/dashboard/SalesPieChart';
+import SalesPiePage from './navigations/dashboard/SalesPiePage';
 
 function App() {
   const [redirectRoute, setRedirectRoute] = useState('/welcome');
@@ -45,6 +47,7 @@ function App() {
           <Route path="/forms/sign-in" element={<SignInPage />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/sales" element={<SalesPage />} />
+          <Route path="/sales-all" element={<SalesPiePage />} />
           <Route path="/export-demand" element={<CountriesDemandPage />} />
           <Route path="/tea-types" element={<TeaTypesPage />} />
           <Route path="/tea-types-whole" element={<TeaTypesWholePage />} />

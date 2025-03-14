@@ -201,7 +201,7 @@ const ExportDemandChart = () => {
         },
         title: {
           display: true,
-          text: "Predicted Demand",
+          text: "Predicted Demand (Kg)",
           color: "#333",
         },
         beginAtZero: true,

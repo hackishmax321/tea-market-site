@@ -12,6 +12,8 @@ import {
   ArcElement
 } from "chart.js";
 import axios from "axios";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 import TwitterPostAnalysisChart from "./TwiterPostsAnalysis";
 import FacebookPostAnalysisChart from "./FacebookPostsAnalysis";
 import InstagramPostAnalysisChart from "./InstagramPostsAnalysis";
@@ -148,6 +150,38 @@ const TrendAnalysisChart = () => {
     },
   };
 
+
+  const generatePDF = async () => {
+    const doc = new jsPDF("landscape");
+    const logo = new Image();
+    logo.src = `${process.env.PUBLIC_URL}/images/logo.png`;
+
+    logo.onload = () => {
+      // Add logo and header
+      doc.addImage(logo, "PNG", 10, 10, 50, 30);
+      doc.setFontSize(22);
+      doc.text("TeaVerse", 70, 20);
+      doc.setFontSize(10);
+      doc.text("123 Green Tea Road, Colombo, Sri Lanka", 70, 30);
+      doc.text("Phone: +94 77 123 4567 | Email: contact@teaverse.com", 70, 37);
+      doc.text("Website: www.teaverse.com", 70, 44);
+      doc.setDrawColor(150);
+      doc.line(10, 50, 280, 50);
+      doc.setFontSize(16);
+      doc.text("Facebook Post Analysis Report", 10, 60);
+
+      const chartElement = document.querySelector(".chartContainer");
+      if (chartElement) {
+        html2canvas(chartElement).then((canvas) => {
+          const imgData = canvas.toDataURL("image/png");
+          doc.addImage(imgData, "PNG", 10, 70, 260, 120);
+
+          doc.save("Google_Analysis_Report.pdf");
+        });
+      }
+    };
+  };
+
   return (
     <div className="chart">
       {/* <div className="cardHeader">
@@ -179,6 +213,33 @@ const TrendAnalysisChart = () => {
         <div style={{ flex: "1", textAlign: "center", marginTop: "40px" }}>
           <h3>This Year Summary</h3>
           <Pie data={thisYearData} />
+          {!loading && (
+            <button
+              onClick={generatePDF}
+              style={{
+                display: "block",
+                margin: "10px auto",
+                padding: '10px 20px',
+                backgroundColor: "#28a745",
+                color: "#fff",
+                fontSize: "16px",
+                border: "none",
+                borderRadius: "5px",
+                cursor: "pointer",
+                transition: 0.6,
+              }}
+              onMouseEnter={(e) => {
+                e.target.style.backgroundColor = 'lightgreen';
+                e.target.style.color = 'black';
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.backgroundColor = 'green';
+                e.target.style.color = 'white';
+              }}
+            >
+              Generate PDF
+            </button>
+          )}
         </div>
       </div>
 
